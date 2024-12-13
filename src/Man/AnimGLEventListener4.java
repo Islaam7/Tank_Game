@@ -12,10 +12,19 @@ import java.awt.event.*;
 import java.io.IOException;
 import javax.media.opengl.*;
 
+import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 import javax.media.opengl.glu.GLU;
-
+class Point{
+    double x, y;
+    Point(double x,double y){
+        this.x = x;
+        this.y = y;
+    }
+}
 public class AnimGLEventListener4 extends AnimListener {
+    List<Point> points = new ArrayList<Point>();
 
     int animationIndex = 0;
     int monsterIndex = 4;
@@ -24,9 +33,9 @@ public class AnimGLEventListener4 extends AnimListener {
     int x = maxWidth/2, y = maxHeight/2;
     int x1 = maxWidth/3, y1 = maxHeight-10;
     
-    String textureNames[] = {"Man1.png","Man2.png","Man3.png","Man4.png","11.png","18.png","Back.png"};
-    TextureReader.Texture texture[] = new TextureReader.Texture[textureNames.length];
-    int textures[] = new int[textureNames.length];
+    String[] textureNames = {"Man1.png","Man2.png","Man3.png","Man4.png","11.png","18.png","Cloud.jpeg"};
+    TextureReader.Texture[] texture = new TextureReader.Texture[textureNames.length];
+    int[] textures = new int[textureNames.length];
 
     /*
      5 means gun in array pos
@@ -46,7 +55,7 @@ public class AnimGLEventListener4 extends AnimListener {
                 texture[i] = TextureReader.readTexture(assetsFolderName + "//" + textureNames[i] , true);
                 gl.glBindTexture(GL.GL_TEXTURE_2D, textures[i]);
 
-//                mipmapsFromPNG(gl, new GLU(), texture[i]);
+                //mipmapsFromPNG(gl, new GLU(), texture[i]);
                 new GLU().gluBuild2DMipmaps(
                     GL.GL_TEXTURE_2D,
                     GL.GL_RGBA, // Internal Texel Format,
@@ -60,19 +69,26 @@ public class AnimGLEventListener4 extends AnimListener {
               e.printStackTrace();
             }
         }
+        points.add(new Point(-1,-1));
+        for(double i=-1;i<1;i+=0.02){
+            points.add(new Point(i,y));
+        }
+        points.add(new Point(1,-1));
     }
-    
+    @Override
     public void display(GLAutoDrawable gld) {
         y1--;
         GL gl = gld.getGL();
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);       //Clear The Screen And The Depth Buffer
         gl.glLoadIdentity(); 
-        
+
+        gl.glColor3f(1,1,1);
         DrawBackground(gl);
         handleKeyPress();
         animationIndex = animationIndex % 4;
         
 //        DrawGraph(gl);
+        gl.glColor3f(1,1,1);
         DrawSprite(gl, x, y, animationIndex, 1);
         
         DrawSprite(gl, x1, y1, monsterIndex, 1);
@@ -85,6 +101,15 @@ public class AnimGLEventListener4 extends AnimListener {
             y1=maxHeight;
             monsterIndex = (int)(Math.random()*2)+4;
         }
+        gl.glDisable(GL.GL_TEXTURE_2D);
+        gl.glBegin(GL.GL_POLYGON);
+        gl.glColor3f(1, 0, 0);
+        gl.glVertex2d(0, 1);
+        gl.glVertex2d(0, 0.3);
+        gl.glVertex2d(0.2, 0.2);
+        gl.glVertex2d(0.3, 1);
+        gl.glEnd();
+        gl.glEnable(GL.GL_TEXTURE_2D);
     }
     
     public double sqrdDistance(int x, int y, int x1, int y1){

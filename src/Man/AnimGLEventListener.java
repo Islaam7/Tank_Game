@@ -29,17 +29,16 @@ public class AnimGLEventListener extends AnimListener {
         GL gl = gld.getGL();
         gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);    //This Will Clear The Background Color To Black
         
-        gl.glEnable(GL.GL_TEXTURE_2D);  // Enable Texture Mapping
+        gl.glEnable(GL.GL_TEXTURE_2D);// Enable Texture Mapping
         gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
-        
-        //number of textures,array to hold the indeces
+        //number of textures,array to hold the indices
         gl.glGenTextures(1, textureIndex, 0);
         
         try {
             texture = TextureReader.readTexture(assetsFolderName + "//" + textureName , true);
             gl.glBindTexture(GL.GL_TEXTURE_2D, textureIndex[0]);
 
-//                mipmapsFromPNG(gl, new GLU(), texture[i]);
+            //mipmapsFromPNG(gl, new GLU(), texture[i]);
             new GLU().gluBuild2DMipmaps(
                 GL.GL_TEXTURE_2D,
                 GL.GL_RGBA, // Internal Texel Format,
@@ -57,7 +56,8 @@ public class AnimGLEventListener extends AnimListener {
     public void display(GLAutoDrawable gld) {
 
         GL gl = gld.getGL();
-        gl.glClear(GL.GL_COLOR_BUFFER_BIT);       //Clear The Screen And The Depth Buffer
+        gl.glClear(GL.GL_COLOR_BUFFER_BIT);
+        //Clear The Screen And The Depth Buffer
         gl.glLoadIdentity(); 
         
         DrawBackground(gl);

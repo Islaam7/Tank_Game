@@ -26,7 +26,7 @@ public class Anim extends JFrame {
         GLCanvas glcanvas;
         Animator animator;
         
-        AnimListener listener = new AnimGLEventListener3();
+        AnimListener listener = new AnimGLEventListener4();
         glcanvas = new GLCanvas();
         glcanvas.addGLEventListener(listener);
         glcanvas.addKeyListener(listener);
