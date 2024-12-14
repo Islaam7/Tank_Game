@@ -1,28 +1,24 @@
 package Man;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-//package project;
-
 import com.sun.opengl.util.*;
 import java.awt.*;
 import javax.media.opengl.*;
 import javax.swing.*;
+import screens.SplashScreen;
 
 public class Anim extends JFrame {
 
     public static void main(String[] args) {
-        new Anim();
-    }
+        SplashScreen splash = new SplashScreen();
+        splash.showSplashScreen();
 
+        SwingUtilities.invokeLater(() -> new Anim());
+    }
 
     public Anim() {
         GLCanvas glcanvas;
         Animator animator;
-        
+
         AnimListener listener = new AnimGLEventListener4();
         glcanvas = new GLCanvas();
         glcanvas.addGLEventListener(listener);
