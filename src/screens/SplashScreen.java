@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class SplashScreen extends JWindow {
     public SplashScreen() {
-        JLabel splashLabel = new JLabel(new ImageIcon(getClass().getResource("/Assets/tank_images/tankSplash3.png")));
+        JLabel splashLabel = new JLabel(new ImageIcon(getClass().getResource("/Assets/tank_images/tankBackground.jpg")));
 
         getContentPane().add(splashLabel, BorderLayout.CENTER);
         setSize(800, 600);

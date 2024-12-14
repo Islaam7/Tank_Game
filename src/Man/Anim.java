@@ -1,9 +1,8 @@
 package Man;
 
 import com.sun.opengl.util.*;
-import java.awt.*;
-import javax.media.opengl.*;
 import javax.swing.*;
+import screens.HomeScreen;
 import screens.SplashScreen;
 
 public class Anim extends JFrame {
@@ -12,28 +11,25 @@ public class Anim extends JFrame {
         SplashScreen splash = new SplashScreen();
         splash.showSplashScreen();
 
-        SwingUtilities.invokeLater(() -> new Anim());
+        // Schedule to display the Home Page after the SplashScreen
+        SwingUtilities.invokeLater(() -> {
+            Anim anim = new Anim();
+            anim.showHomePage(); // Show the HomePage
+        });
     }
 
     public Anim() {
-        GLCanvas glcanvas;
-        Animator animator;
-
-        AnimListener listener = new AnimGLEventListener4();
-        glcanvas = new GLCanvas();
-        glcanvas.addGLEventListener(listener);
-        glcanvas.addKeyListener(listener);
-        getContentPane().add(glcanvas, BorderLayout.CENTER);
-        animator = new FPSAnimator(15);
-        animator.add(glcanvas);
-        animator.start();
-
         setTitle("Anim Test");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
         setVisible(true);
-        setFocusable(true);
-        glcanvas.requestFocus();
+    }
+
+    public void showHomePage() {
+        // Set the content pane to the HomePage
+        setContentPane(new HomeScreen(this));
+        revalidate();
+        repaint();
     }
 }
