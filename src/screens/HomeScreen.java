@@ -3,17 +3,24 @@ package Screens;
 import Man.AnimGLEventListener2;
 import Man.AnimGLEventListener3;
 import Man.AnimGLEventListener4;
+import Man.SoundManager;
 import com.sun.opengl.util.Animator;
 import com.sun.opengl.util.FPSAnimator;
 
 import javax.media.opengl.GLCanvas;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.Objects;
 
 public class HomeScreen extends JPanel {
+    private SoundManager soundManager;
+    private JButton soundToggleButton;
 
     public HomeScreen(JFrame frame) {
         setLayout(new BorderLayout());
@@ -30,6 +37,23 @@ public class HomeScreen extends JPanel {
         JButton localGameButton = createButton("Start Local Game");
         JButton computerGameButton = createButton("Start Computer Game");
         JButton exitButton = createButton("Exit");
+
+        soundToggleButton = new JButton();
+        soundToggleButton.setIcon(new ImageIcon(getClass().getResource("/Assets/music/sound_on.png")));
+        soundToggleButton.setBorderPainted(false);
+        soundToggleButton.setContentAreaFilled(false);
+        soundToggleButton.setFocusPainted(false);
+        soundToggleButton.setOpaque(false);
+        soundToggleButton.addActionListener(e -> {
+            soundManager.toggleSound();
+            updateSoundButtonIcon();
+        });
+
+        soundManager = new SoundManager("/Assets/music/background.wav");
+        soundManager.playBackgroundMusic();
+
+
+
 
 //        onlineMatchButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Online Match Starting..."));
         onlineMatchButton.addActionListener(e -> openLoginForm());
@@ -66,6 +90,7 @@ public class HomeScreen extends JPanel {
         buttonPanel.add(computerGameButton);
         buttonPanel.add(exitButton);
 
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -78,6 +103,16 @@ public class HomeScreen extends JPanel {
 
         add(backgroundLabel, BorderLayout.CENTER);
     }
+
+    private void updateSoundButtonIcon() {
+        if (soundManager.isMusicPlaying()) {
+            soundToggleButton.setIcon(new ImageIcon(getClass().getResource("/Assets/music/sound_on.png")));
+        } else {
+            soundToggleButton.setIcon(new ImageIcon(getClass().getResource("/Assets/music/sound_off.png")));
+        }
+    }
+
+
     private void openLoginForm() {
         JDialog loginDialog = new JDialog((JFrame) SwingUtilities.getWindowAncestor(this), "Login Form", true);
         loginDialog.setSize(350, 250);
@@ -283,6 +318,7 @@ public class HomeScreen extends JPanel {
             public void mouseEntered(MouseEvent e) {
                 button.setForeground(Color.orange);
                 button.setBackground(new Color(0, 0, 0, 180));
+                soundManager.playSoundOnce("/Assets/music/button_sound.wav");
             }
 
             @Override
