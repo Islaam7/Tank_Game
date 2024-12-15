@@ -7,6 +7,7 @@ import com.sun.opengl.util.FPSAnimator;
 import javax.media.opengl.GLCanvas;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -28,7 +29,9 @@ public class HomeScreen extends JPanel {
         JButton computerGameButton = createButton("Start Computer Game");
         JButton exitButton = createButton("Exit");
 
-        onlineMatchButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Online Match Starting..."));
+//        onlineMatchButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Online Match Starting..."));
+        onlineMatchButton.addActionListener(e -> openLoginForm());
+
         localGameButton.addActionListener(e -> {
             frame.getContentPane().removeAll();
 
@@ -48,7 +51,9 @@ public class HomeScreen extends JPanel {
             glCanvas.requestFocus();
         });
 
-        computerGameButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Computer Game Starting..."));
+        computerGameButton.addActionListener(e -> openGameLevelForm());
+
+//        computerGameButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Computer Game Starting..."));
         exitButton.addActionListener(e -> System.exit(0));
 
         JPanel buttonPanel = new JPanel();
@@ -71,6 +76,228 @@ public class HomeScreen extends JPanel {
 
         add(backgroundLabel, BorderLayout.CENTER);
     }
+    private void openLoginForm() {
+        JDialog loginDialog = new JDialog((JFrame) SwingUtilities.getWindowAncestor(this), "Login Form", true);
+        loginDialog.setSize(350, 250);
+        loginDialog.setLayout(null);
+        loginDialog.setLocationRelativeTo(this);
+
+        // Username
+        JLabel usernameLabel = new JLabel("USERNAME");
+        usernameLabel.setBounds(50, 30, 100, 25);
+        loginDialog.add(usernameLabel);
+
+        JTextField usernameField = new JTextField();
+        usernameField.setBounds(150, 30, 130, 25);
+        loginDialog.add(usernameField);
+
+        // Password
+        JLabel passwordLabel = new JLabel("PASSWORD");
+        passwordLabel.setBounds(50, 70, 100, 25);
+        loginDialog.add(passwordLabel);
+
+        JPasswordField passwordField = new JPasswordField();
+        passwordField.setBounds(150, 70, 130, 25);
+        loginDialog.add(passwordField);
+
+        // Show the password
+        JCheckBox showPassword = new JCheckBox("Show Password");
+        showPassword.setBounds(150, 100, 130, 25);
+        showPassword.addActionListener(e -> {
+            if (showPassword.isSelected()) {
+                passwordField.setEchoChar((char) 0);
+            } else {
+                passwordField.setEchoChar('\u2022'); // bullet
+            }
+        });
+        loginDialog.add(showPassword);
+
+        // Login and Reset
+        JButton loginButton = new JButton("LOGIN");
+        loginButton.setBounds(80, 150, 80, 30);
+        loginButton.addActionListener(e -> {
+            String username = usernameField.getText();
+            String password = new String(passwordField.getPassword());
+
+            if (username.isEmpty() || password.isEmpty()) {
+                JOptionPane.showMessageDialog(loginDialog, "Please enter both username and password.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(loginDialog, "Login Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                loginDialog.dispose();
+            }
+        });
+        loginDialog.add(loginButton);
+
+        JButton resetButton = new JButton("RESET");
+        resetButton.setBounds(180, 150, 80, 30);
+        resetButton.addActionListener(e -> {
+            usernameField.setText("");
+            passwordField.setText("");
+            showPassword.setSelected(false);
+            passwordField.setEchoChar('\u2022');
+        });
+        loginDialog.add(resetButton);
+
+        loginDialog.setVisible(true);
+    }
+
+    private void openGameLevelForm() {
+        JDialog levelDialog = new JDialog((JFrame) SwingUtilities.getWindowAncestor(this), "Game level", true);
+        levelDialog.setSize(300, 150);
+        levelDialog.setLayout(new GridBagLayout());
+        levelDialog.setLocationRelativeTo(this);
+
+        // LVLs
+        JLabel selectLevelLabel = new JLabel("Select level:");
+        String[] levels = {"Easy", "Normal", "Hard"};
+        JComboBox<String> levelDropdown = new JComboBox<>(levels);
+
+        JButton okButton = new JButton("OK");
+        JButton cancelButton = new JButton("Cancel");
+
+        // Button Actions
+//        okButton.addActionListener(e -> {
+//            String selectedLevel = (String) levelDropdown.getSelectedItem();
+//            JOptionPane.showMessageDialog(levelDialog, "Selected Level: " + selectedLevel);
+//            levelDialog.dispose();
+//        });
+
+        okButton.addActionListener(e -> {
+            String selectedLVL = (String) levelDropdown.getSelectedItem();
+            pickingLVL(selectedLVL);
+            levelDialog.dispose();
+        });
+
+
+        cancelButton.addActionListener(e -> levelDialog.dispose());
+
+        // Layout Setup
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        levelDialog.add(selectLevelLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        levelDialog.add(levelDropdown, gbc);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(okButton);
+        buttonPanel.add(cancelButton);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+        levelDialog.add(buttonPanel, gbc);
+
+        levelDialog.setVisible(true);
+    }
+    private void pickingLVL(String level) {
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+
+        switch (level) {
+            case "Easy":
+                frame.getContentPane().removeAll();
+
+                // GLCanvas for the game
+                GLCanvas glCanvas = new GLCanvas();
+                AnimGLEventListener4 gameListener = new AnimGLEventListener4();
+                glCanvas.addGLEventListener(gameListener);
+                glCanvas.addKeyListener(gameListener);
+
+                frame.getContentPane().add(glCanvas, BorderLayout.CENTER);
+
+                // Add "Back to Menu" button in Easy level
+                JPanel easyOverlayPanel = createOverlayPanel(frame);
+                frame.getContentPane().add(easyOverlayPanel, BorderLayout.SOUTH);
+
+                Animator easyAnimator = new FPSAnimator(glCanvas, 60);
+                easyAnimator.start();
+
+                frame.revalidate();
+                frame.repaint();
+
+                glCanvas.requestFocus();
+                break;
+
+            case "Normal":
+                // Normal level - Yellow background
+                JPanel yellowPanel = new JPanel();
+                yellowPanel.setBackground(Color.YELLOW);
+
+                // Add "Back to Menu" button in Normal level
+                JPanel normalOverlayPanel = createOverlayPanel(frame);
+                yellowPanel.setLayout(new BorderLayout());
+                yellowPanel.add(normalOverlayPanel, BorderLayout.SOUTH);
+
+                updateContentPane(frame, yellowPanel);
+                break;
+
+            case "Hard":
+                // Hard level - Red background
+                JPanel redPanel = new JPanel();
+                redPanel.setBackground(Color.RED);
+
+                // Add "Back to Menu" button in Hard level
+                JPanel hardOverlayPanel = createOverlayPanel(frame);
+                redPanel.setLayout(new BorderLayout());
+                redPanel.add(hardOverlayPanel, BorderLayout.SOUTH);
+
+                updateContentPane(frame, redPanel);
+                break;
+
+            default:
+                // Default - Gray background
+                JPanel grayPanel = new JPanel();
+                grayPanel.setBackground(Color.GRAY);
+                updateContentPane(frame, grayPanel);
+                break;
+        }
+    }
+    private JPanel createOverlayPanel(JFrame frame) {
+        // Transparent panel for overlay
+        JPanel overlayPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        overlayPanel.setOpaque(false);
+
+        // Add the red "Back to Menu" button using the reusable function
+        JButton backButton = createRedButton("Back to Menu", e -> {
+            // Navigate back to the Home Screen
+            frame.getContentPane().removeAll();
+            frame.getContentPane().add(new HomeScreen(frame));
+            frame.revalidate();
+            frame.repaint();
+        });
+
+        overlayPanel.add(backButton);
+        return overlayPanel;
+    }
+
+    // Reusable function to create a red button with specified text and action listener
+    private JButton createRedButton(String text, ActionListener actionListener) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Arial", Font.BOLD, 14));
+        button.setForeground(Color.WHITE);
+        button.setBackground(Color.RED); // Fully red background
+        button.setFocusPainted(false);
+        button.setBorderPainted(false);
+        button.setOpaque(true);
+        button.setContentAreaFilled(true);
+        button.addActionListener(actionListener);
+        return button;
+    }
+
+
+    // Helper method to update the content pane with a panel
+    private void updateContentPane(JFrame frame, JPanel panel) {
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(panel);
+        frame.revalidate();
+        frame.repaint();
+    }
+
+
 
     private JButton createButton(String text) {
         JButton button = new JButton(text);
