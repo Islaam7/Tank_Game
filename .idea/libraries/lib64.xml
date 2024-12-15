@@ -1,13 +1,16 @@
 <component name="libraryTable">
   <library name="lib64">
     <CLASSES>
-      <root url="file://F:/CS 304 - Graphics/Default Setup/JOGLwin/lib64" />
+      <root url="jar://$USER_HOME$/Downloads/JOGLwin/JOGLwin/lib64/gluegen-rt.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/JOGLwin/JOGLwin/lib64/jogl.jar!/" />
     </CLASSES>
     <JAVADOC />
     <NATIVE>
-      <root url="file://F:/CS 304 - Graphics/Default Setup/JOGLwin/lib64" />
+      <root url="file://$USER_HOME$/Downloads/JOGLwin/JOGLwin/lib64" />
+      <root url="file://$USER_HOME$/Downloads/JOGLwin/JOGLwin/lib64" />
+      <root url="file://$USER_HOME$/Downloads/JOGLwin/JOGLwin/lib64" />
+      <root url="file://$USER_HOME$/Downloads/JOGLwin/JOGLwin/lib64" />
     </NATIVE>
     <SOURCES />
-    <jarDirectory url="file://F:/CS 304 - Graphics/Default Setup/JOGLwin/lib64" recursive="false" />
   </library>
 </component>

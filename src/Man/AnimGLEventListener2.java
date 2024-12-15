@@ -105,7 +105,6 @@ public class AnimGLEventListener2 extends AnimListener {
 
         gl.glDisable(GL.GL_BLEND);
     }
-
     /*
      * KeyListener
      */

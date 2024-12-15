@@ -84,7 +84,6 @@ public class HomeScreen extends JPanel {
         loginDialog.setLayout(null);
         loginDialog.setLocationRelativeTo(this);
 
-        // Username Label and TextField
         JLabel usernameLabel = new JLabel("USERNAME");
         usernameLabel.setBounds(50, 30, 100, 25);
         loginDialog.add(usernameLabel);
@@ -93,7 +92,6 @@ public class HomeScreen extends JPanel {
         usernameField.setBounds(150, 30, 130, 25);
         loginDialog.add(usernameField);
 
-        // Password Label and PasswordField
         JLabel passwordLabel = new JLabel("PASSWORD");
         passwordLabel.setBounds(50, 70, 100, 25);
         loginDialog.add(passwordLabel);
@@ -102,7 +100,6 @@ public class HomeScreen extends JPanel {
         passwordField.setBounds(150, 70, 130, 25);
         loginDialog.add(passwordField);
 
-        // Show Password Checkbox
         JCheckBox showPassword = new JCheckBox("Show Password");
         showPassword.setBounds(150, 100, 130, 25);
         showPassword.addActionListener(e -> {
@@ -110,11 +107,10 @@ public class HomeScreen extends JPanel {
                 passwordField.setEchoChar((char) 0);
             } else {
                 passwordField.setEchoChar('\u2022'); // Bullet character
+
             }
         });
         loginDialog.add(showPassword);
-
-        // Buttons: Login and Reset
         JButton loginButton = new JButton("LOGIN");
         loginButton.setBounds(80, 150, 80, 30);
         loginButton.addActionListener(e -> {
@@ -149,7 +145,6 @@ public class HomeScreen extends JPanel {
         levelDialog.setLayout(new GridBagLayout());
         levelDialog.setLocationRelativeTo(this);
 
-        // Components
         JLabel selectLevelLabel = new JLabel("Select level:");
         String[] levels = {"Easy", "Normal", "Hard"};
         JComboBox<String> levelDropdown = new JComboBox<>(levels);
@@ -157,7 +152,6 @@ public class HomeScreen extends JPanel {
         JButton okButton = new JButton("OK");
         JButton cancelButton = new JButton("Cancel");
 
-//         Button Actions
 //        okButton.addActionListener(e -> {
 //            String selectedLevel = (String) levelDropdown.getSelectedItem();
 //            JOptionPane.showMessageDialog(levelDialog, "Selected Level: " + selectedLevel);
@@ -263,7 +257,6 @@ public class HomeScreen extends JPanel {
                 break;
         }
     }
-
     // Helper method to update the content pane with a panel
     private void updateContentPane(JFrame frame, JPanel panel) {
         frame.getContentPane().removeAll();
