@@ -27,17 +27,13 @@ bin/
 
 ### Mac OS ###
 .DS_Store
-
-#xml
-*.xml
-
-#iml
-*.iml
-
-#.idea
-*.idea
-
-# Ignore src\Test directory
-src/test
-*.class
-
+# Ignore system-specific files
+**/AppData/
+**/Documents/
+**/Downloads/
+**/OneDrive/
+**/Oracle/
+**/Pictures/
+**/Videos/
+**/Documents/
+.gitconfig
