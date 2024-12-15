@@ -118,22 +118,22 @@ public class AnimGLEventListener4 extends AnimListener {
         gl.glColor3f(1, 1, 1);
         DrawBackground(gl);
 
-        gl.glColor3f(0.5451f, 0.2706f, 0.0745f);
-        gl.glDisable(GL.GL_TEXTURE_2D);
-
-
-        gl.glBegin(GL.GL_POLYGON);
-        for (Point p : points) {
-            gl.glVertex2d(p.x, p.y);
-        }
-        gl.glEnd();
-
-        gl.glEnable(GL.GL_TEXTURE_2D);
+        DrawMountain(gl);
     }
 
     @Override
     public void reshape(GLAutoDrawable glAutoDrawable, int i, int i1, int i2, int i3) {}
 
+    public void DrawMountain(GL gl) {
+        gl.glColor3f(0.5451f, 0.2706f, 0.0745f);
+        gl.glDisable(GL.GL_TEXTURE_2D);
+        gl.glBegin(GL.GL_POLYGON);
+        for (Point p : points) {
+            gl.glVertex2d(p.x, p.y);
+        }
+        gl.glEnd();
+        gl.glEnable(GL.GL_TEXTURE_2D);
+    }
     @Override
     public void displayChanged(GLAutoDrawable glAutoDrawable, boolean b, boolean b1) {}
 

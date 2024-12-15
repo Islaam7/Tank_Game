@@ -46,67 +46,19 @@ public class AnimGLEventListener3 extends AnimListener {
         }
         {
             points.add(new Point(-1.0, -1.0));
-            points.add(new Point(-1.0, -0.45));
-            points.add(new Point(-0.975, -0.475));
-            points.add(new Point(-0.95, -0.45));
-            points.add(new Point(-0.925, -0.425));
-            points.add(new Point(-0.9, -0.5));
-            points.add(new Point(-0.875, -0.475));
-            points.add(new Point(-0.85, -0.425));
-            points.add(new Point(-0.825, -0.375));
-            points.add(new Point(-0.82, -0.22));
-            points.add(new Point(-0.8, -0.15));
-            points.add(new Point(-0.775, -0.225));
-            points.add(new Point(-0.75, -0.25));
-            points.add(new Point(-0.725, -0.275));
-            points.add(new Point(-0.7, -0.3));
-            points.add(new Point(-0.675, -0.275));
-            points.add(new Point(-0.65, -0.225));
-            points.add(new Point(-0.625, -0.175));
-            points.add(new Point(-0.6, -0.15));
-            points.add(new Point(-0.575, -0.125));
-            points.add(new Point(-0.55, -0.1));
-            points.add(new Point(-0.525, -0.075));
-            points.add(new Point(-0.5, -0.05));
-            points.add(new Point(-0.475, -0.025));
-            points.add(new Point(-0.45, 0));
-            points.add(new Point(-0.425, 0.025));
-            points.add(new Point(-0.4, -0.18));
-            points.add(new Point(-0.375, -0.125));
-            points.add(new Point(-0.35, -0.1));
-            points.add(new Point(-0.325, -0.075));
-            points.add(new Point(-0.3, -0.13));
-            points.add(new Point(-0.275, -0.075));
-            points.add(new Point(-0.25, 0));
-            points.add(new Point(-0.225, 0.025));
+            points.add(new Point(-0.95, -0.85));
+            points.add(new Point(-0.9, -0.65));
+            points.add(new Point(-0.8, -0.5));
+            points.add(new Point(-0.6, -0.2));
+            points.add(new Point(-0.4, 0.1));
             points.add(new Point(-0.2, 0.4));
-            points.add(new Point(-0.175, 0.325));
-            points.add(new Point(-0.15, 0.6));
-            points.add(new Point(-0.125, 0.175));
-            points.add(new Point(-0.1, 0.65));
-            points.add(new Point(-0.05, 0.6));
-            points.add(new Point(0.0, 0.5));
-            points.add(new Point(0.05, 0.525));
-            points.add(new Point(0.1, 0.6));
-            points.add(new Point(0.15, 0.6));
-            points.add(new Point(0.2, 0.62));
-            points.add(new Point(0.25, 0.635));
-            points.add(new Point(0.3, 0.65));
-            points.add(new Point(0.35, 0.675));
-            points.add(new Point(0.4, 0.6));
-            points.add(new Point(0.45, 0.525));
-            points.add(new Point(0.5, 0.3));
-            points.add(new Point(0.55, 0.225));
-            points.add(new Point(0.6, 0.12));
-            points.add(new Point(0.65, 0.075));
-            points.add(new Point(0.7, 0.0));
-            points.add(new Point(0.75, -0.01));
-            points.add(new Point(0.8, -0.02));
-            points.add(new Point(0.85, -0.075));
-            points.add(new Point(0.9, -0.15));
-            points.add(new Point(0.95, -0.2));
-            points.add(new Point(1.0, -0.25));
-            points.add(new Point(1, -1));
+            points.add(new Point(0.0, 0.36));
+            points.add(new Point(0.2, 0.5));
+            points.add(new Point(0.4, 0.1));
+            points.add(new Point(0.6, -0.3));
+            points.add(new Point(0.8, -0.6));
+            points.add(new Point(0.9, -0.75));
+            points.add(new Point(1.0, -1.0));
         }
     }
     @Override
@@ -118,18 +70,24 @@ public class AnimGLEventListener3 extends AnimListener {
         gl.glColor3f(1, 1, 1);
         DrawBackground(gl);
 
+        DrawMountain(gl);
+    }
+
+    @Override
+    public void reshape(GLAutoDrawable glAutoDrawable, int i, int i1, int i2, int i3) {}
+
+    public void DrawMountain(GL gl) {
         gl.glColor3f(0.5451f, 0.2706f, 0.0745f);
         gl.glDisable(GL.GL_TEXTURE_2D);
-
-
         gl.glBegin(GL.GL_POLYGON);
         for (Point p : points) {
             gl.glVertex2d(p.x, p.y);
         }
         gl.glEnd();
-
         gl.glEnable(GL.GL_TEXTURE_2D);
     }
+    @Override
+    public void displayChanged(GLAutoDrawable glAutoDrawable, boolean b, boolean b1) {}
 
     @Override
     public void reshape(GLAutoDrawable glAutoDrawable, int i, int i1, int i2, int i3) {}
