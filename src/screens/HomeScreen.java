@@ -1,5 +1,6 @@
 package screens;
 
+import Man.AnimGLEventListener1;
 import Man.AnimGLEventListener2;
 import Man.AnimGLEventListener3;
 import Man.AnimGLEventListener4;
@@ -40,7 +41,7 @@ public class HomeScreen extends JPanel {
             frame.getContentPane().removeAll();
 
             GLCanvas glCanvas = new GLCanvas();
-            AnimGLEventListener4 gameListener = new AnimGLEventListener4();
+            AnimGLEventListener1 gameListener = new AnimGLEventListener1();
             glCanvas.addGLEventListener(gameListener);
             glCanvas.addKeyListener(gameListener);
 
@@ -166,11 +167,35 @@ public class HomeScreen extends JPanel {
 //            levelDialog.dispose();
 //        });
 
+//        okButton.addActionListener(e -> {
+//            String selectedLVL = (String) levelDropdown.getSelectedItem();
+////            GameLevelSetup.pickinglvll(selectedLVL);
+//            pickingLVL(selectedLVL);
+//            levelDialog.dispose();
+//        });
         okButton.addActionListener(e -> {
+            // Get the selected level from the dropdown
             String selectedLVL = (String) levelDropdown.getSelectedItem();
-            pickingLVL(selectedLVL);
+
+            // Get the current frame or create a new frame if necessary
+            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(levelDialog);
+            if (frame == null) {
+                frame = new JFrame("Game Frame");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setSize(800, 600);
+                frame.setLocationRelativeTo(null);
+            }
+
+            // Call GameLevelSetup.setupLevel() with the selected level
+            GameLevelSetup.setupLevel(frame, selectedLVL);
+
+            // Make the frame visible (if it's not already)
+            frame.setVisible(true);
+
+            // Close the level selection dialog
             levelDialog.dispose();
         });
+
 
 
         cancelButton.addActionListener(e -> levelDialog.dispose());
@@ -198,94 +223,94 @@ public class HomeScreen extends JPanel {
 
         levelDialog.setVisible(true);
     }
-    private void pickingLVL(String level) {
-        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-
-        switch (level) {
-            case "Easy":
-                frame.getContentPane().removeAll();
-
-                // GLCanvas for the game with AnimGLEventListener2
-                GLCanvas glCanvasEasy = new GLCanvas();
-                AnimGLEventListener2 gameListenerEasy = new AnimGLEventListener2();
-                glCanvasEasy.addGLEventListener(gameListenerEasy);
-                glCanvasEasy.addKeyListener(gameListenerEasy);
-
-                frame.getContentPane().add(glCanvasEasy, BorderLayout.CENTER);
-
-                // Add "Back to Menu" button in Easy level
-                JPanel easyOverlayPanel = createOverlayPanel(frame);
-                frame.getContentPane().add(easyOverlayPanel, BorderLayout.SOUTH);
-
-                // Animator for Easy level
-                Animator easyAnimator = new FPSAnimator(glCanvasEasy, 60);
-                easyAnimator.start();
-
-                frame.revalidate();
-                frame.repaint();
-
-                glCanvasEasy.requestFocus();
-                break;
-
-            case "Normal":
-                frame.getContentPane().removeAll();
-
-                // GLCanvas for the game with AnimGLEventListener3
-                GLCanvas glCanvasNormal = new GLCanvas();
-                AnimGLEventListener3 gameListenerNormal = new AnimGLEventListener3();
-                glCanvasNormal.addGLEventListener(gameListenerNormal);
-                glCanvasNormal.addKeyListener(gameListenerNormal);
-
-                frame.getContentPane().add(glCanvasNormal, BorderLayout.CENTER);
-
-                // Add "Back to Menu" button in Normal level
-                JPanel normalOverlayPanel = createOverlayPanel(frame);
-                frame.getContentPane().add(normalOverlayPanel, BorderLayout.SOUTH);
-
-                // Animator for Normal level
-                Animator normalAnimator = new FPSAnimator(glCanvasNormal, 60);
-                normalAnimator.start();
-
-                frame.revalidate();
-                frame.repaint();
-
-                glCanvasNormal.requestFocus();
-                break;
-
-            case "Hard":
-                frame.getContentPane().removeAll();
-
-                // GLCanvas for the game with AnimGLEventListener4
-                GLCanvas glCanvasHard = new GLCanvas();
-                AnimGLEventListener4 gameListenerHard = new AnimGLEventListener4();
-                glCanvasHard.addGLEventListener(gameListenerHard);
-                glCanvasHard.addKeyListener(gameListenerHard);
-
-                frame.getContentPane().add(glCanvasHard, BorderLayout.CENTER);
-
-                // Add "Back to Menu" button in Hard level
-                JPanel hardOverlayPanel = createOverlayPanel(frame);
-                frame.getContentPane().add(hardOverlayPanel, BorderLayout.SOUTH);
-
-                // Animator for Hard level
-                Animator hardAnimator = new FPSAnimator(glCanvasHard, 60);
-                hardAnimator.start();
-
-                frame.revalidate();
-                frame.repaint();
-
-                glCanvasHard.requestFocus();
-                break;
-
-            default:
-                // Default - Gray background
-                JPanel grayPanel = new JPanel();
-                grayPanel.setBackground(Color.GRAY);
-                updateContentPane(frame, grayPanel);
-                break;
-        }
-
-    }
+//    private void pickingLVL(String level) {
+//        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+//
+//        switch (level) {
+//            case "Easy":
+//                frame.getContentPane().removeAll();
+//
+//                // GLCanvas for the game with AnimGLEventListener2
+//                GLCanvas glCanvasEasy = new GLCanvas();
+//                AnimGLEventListener2 gameListenerEasy = new AnimGLEventListener2();
+//                glCanvasEasy.addGLEventListener(gameListenerEasy);
+//                glCanvasEasy.addKeyListener(gameListenerEasy);
+//
+//                frame.getContentPane().add(glCanvasEasy, BorderLayout.CENTER);
+//
+//                // Add "Back to Menu" button in Easy level
+//                JPanel easyOverlayPanel = createOverlayPanel(frame);
+//                frame.getContentPane().add(easyOverlayPanel, BorderLayout.SOUTH);
+//
+//                // Animator for Easy level
+//                Animator easyAnimator = new FPSAnimator(glCanvasEasy, 60);
+//                easyAnimator.start();
+//
+//                frame.revalidate();
+//                frame.repaint();
+//
+//                glCanvasEasy.requestFocus();
+//                break;
+//
+//            case "Normal":
+//                frame.getContentPane().removeAll();
+//
+//                // GLCanvas for the game with AnimGLEventListener3
+//                GLCanvas glCanvasNormal = new GLCanvas();
+//                AnimGLEventListener3 gameListenerNormal = new AnimGLEventListener3();
+//                glCanvasNormal.addGLEventListener(gameListenerNormal);
+//                glCanvasNormal.addKeyListener(gameListenerNormal);
+//
+//                frame.getContentPane().add(glCanvasNormal, BorderLayout.CENTER);
+//
+//                // Add "Back to Menu" button in Normal level
+//                JPanel normalOverlayPanel = createOverlayPanel(frame);
+//                frame.getContentPane().add(normalOverlayPanel, BorderLayout.SOUTH);
+//
+//                // Animator for Normal level
+//                Animator normalAnimator = new FPSAnimator(glCanvasNormal, 60);
+//                normalAnimator.start();
+//
+//                frame.revalidate();
+//                frame.repaint();
+//
+//                glCanvasNormal.requestFocus();
+//                break;
+//
+//            case "Hard":
+//                frame.getContentPane().removeAll();
+//
+//                // GLCanvas for the game with AnimGLEventListener4
+//                GLCanvas glCanvasHard = new GLCanvas();
+//                AnimGLEventListener4 gameListenerHard = new AnimGLEventListener4();
+//                glCanvasHard.addGLEventListener(gameListenerHard);
+//                glCanvasHard.addKeyListener(gameListenerHard);
+//
+//                frame.getContentPane().add(glCanvasHard, BorderLayout.CENTER);
+//
+//                // Add "Back to Menu" button in Hard level
+//                JPanel hardOverlayPanel = createOverlayPanel(frame);
+//                frame.getContentPane().add(hardOverlayPanel, BorderLayout.SOUTH);
+//
+//                // Animator for Hard level
+//                Animator hardAnimator = new FPSAnimator(glCanvasHard, 60);
+//                hardAnimator.start();
+//
+//                frame.revalidate();
+//                frame.repaint();
+//
+//                glCanvasHard.requestFocus();
+//                break;
+//
+//            default:
+//                // Default - Gray background
+//                JPanel grayPanel = new JPanel();
+//                grayPanel.setBackground(Color.GRAY);
+//                updateContentPane(frame, grayPanel);
+//                break;
+//        }
+//
+//    }
     // to handle the picking lvl
     public class GameLevelSetup {
 
