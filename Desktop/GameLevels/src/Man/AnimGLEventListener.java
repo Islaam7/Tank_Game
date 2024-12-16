@@ -11,14 +11,13 @@ import java.awt.event.*;
 import java.io.IOException;
 import javax.media.opengl.*;
 
-import java.util.BitSet;
 import javax.media.opengl.glu.GLU;
 
 public class AnimGLEventListener extends AnimListener {
     
     String textureName = "Back.png";
     TextureReader.Texture texture;
-    int textureIndex[] = new int[1];
+    int[] textureIndex = new int[1];
     
     /*
      5 means gun in array pos
@@ -45,7 +44,7 @@ public class AnimGLEventListener extends AnimListener {
                 texture.getWidth(), texture.getHeight(),
                 GL.GL_RGBA, // External format from image,
                 GL.GL_UNSIGNED_BYTE,
-                texture.getPixels() // Imagedata
+                texture.getPixels() // Image data
                 );
         } catch( IOException e ) {
           System.out.println(e);

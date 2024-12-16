@@ -1,11 +1,12 @@
-package Screens;
+package screens;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class SplashScreen extends JWindow {
     public SplashScreen() {
-        JLabel splashLabel = new JLabel(new ImageIcon(getClass().getResource("/Assets/tank_images/tankBackground.jpg")));
+        JLabel splashLabel = new JLabel(new ImageIcon(Objects.requireNonNull(getClass().getResource("/Assets/tank_images/tankBackground.jpg"))));
 
         getContentPane().add(splashLabel, BorderLayout.CENTER);
         setSize(800, 600);

@@ -1,9 +1,8 @@
 package Man;
 
-import com.sun.opengl.util.*;
 import javax.swing.*;
-import Screens.HomeScreen;
-import Screens.SplashScreen;
+import screens.HomeScreen;
+import screens.SplashScreen;
 
 public class Anim extends JFrame {
 
