@@ -179,12 +179,12 @@ public class HomeScreen extends JPanel {
 
             // Get the current frame or create a new frame if necessary
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(levelDialog);
-            if (frame == null) {
-                frame = new JFrame("Game Frame");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setSize(800, 600);
-                frame.setLocationRelativeTo(null);
-            }
+//            if (frame == null) {
+//                frame = new JFrame("Game Frame");
+//                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//                frame.setSize(800, 600);
+//                frame.setLocationRelativeTo(null);
+//            }
 
             // Call GameLevelSetup.setupLevel() with the selected level
             GameLevelSetup.setupLevel(frame, selectedLVL);
@@ -361,10 +361,10 @@ public class HomeScreen extends JPanel {
     private static JPanel createOverlayPanel(JFrame frame) {
         // Transparent panel for overlay
         JPanel overlayPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        overlayPanel.setOpaque(false);
+        overlayPanel.setOpaque(false); // make the panal transparent
 
         // Add the red "Back to Menu" button using the reusable function
-        JButton backButton = createRedButton("Back to Menu", e -> {
+        JButton backButton = createBackToMenuButton("Back to Menu", e -> {
             //Navigate back to the Home Screen
             frame.getContentPane().removeAll();
             frame.getContentPane().add(new HomeScreen(frame));
@@ -391,13 +391,11 @@ public class HomeScreen extends JPanel {
 //            frame.getContentPane().add(glCanvas, BorderLayout.CENTER);
 //        }
 //    }
-
-    // Reusable function to create a red button with specified text and action listener
-    private static JButton createRedButton(String text, ActionListener actionListener) {
+    private static JButton createBackToMenuButton(String text, ActionListener actionListener) {
         JButton button = new JButton(text);
         button.setFont(new Font("Arial", Font.BOLD, 14));
         button.setForeground(Color.WHITE);
-        button.setBackground(Color.RED); // Fully red background
+        button.setBackground(Color.RED); // red background
         button.setFocusPainted(false);
         button.setBorderPainted(false);
         button.setOpaque(true);
@@ -408,12 +406,12 @@ public class HomeScreen extends JPanel {
 
 
     // Helper method to update the content pane with a panel
-    private void updateContentPane(JFrame frame, JPanel panel) {
-        frame.getContentPane().removeAll();
-        frame.getContentPane().add(panel);
-        frame.revalidate();
-        frame.repaint();
-    }
+//    private void updateContentPane(JFrame frame, JPanel panel) {
+//        frame.getContentPane().removeAll();
+//        frame.getContentPane().add(panel);
+//        frame.revalidate();
+//        frame.repaint();
+//    }
 
 
 
