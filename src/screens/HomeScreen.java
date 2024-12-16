@@ -1,13 +1,17 @@
 package screens;
 
+import Man.AnimGLEventListener2;
+import Man.AnimGLEventListener3;
 import Man.AnimGLEventListener4;
 import com.sun.opengl.util.Animator;
 import com.sun.opengl.util.FPSAnimator;
 
 import javax.media.opengl.GLCanvas;
+import javax.media.opengl.GLEventListener;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -201,51 +205,76 @@ public class HomeScreen extends JPanel {
             case "Easy":
                 frame.getContentPane().removeAll();
 
-                // GLCanvas for the game
-                GLCanvas glCanvas = new GLCanvas();
-                AnimGLEventListener4 gameListener = new AnimGLEventListener4();
-                glCanvas.addGLEventListener(gameListener);
-                glCanvas.addKeyListener(gameListener);
+                // GLCanvas for the game with AnimGLEventListener2
+                GLCanvas glCanvasEasy = new GLCanvas();
+                AnimGLEventListener2 gameListenerEasy = new AnimGLEventListener2();
+                glCanvasEasy.addGLEventListener(gameListenerEasy);
+                glCanvasEasy.addKeyListener(gameListenerEasy);
 
-                frame.getContentPane().add(glCanvas, BorderLayout.CENTER);
+                frame.getContentPane().add(glCanvasEasy, BorderLayout.CENTER);
 
                 // Add "Back to Menu" button in Easy level
                 JPanel easyOverlayPanel = createOverlayPanel(frame);
                 frame.getContentPane().add(easyOverlayPanel, BorderLayout.SOUTH);
 
-                Animator easyAnimator = new FPSAnimator(glCanvas, 60);
+                // Animator for Easy level
+                Animator easyAnimator = new FPSAnimator(glCanvasEasy, 60);
                 easyAnimator.start();
 
                 frame.revalidate();
                 frame.repaint();
 
-                glCanvas.requestFocus();
+                glCanvasEasy.requestFocus();
                 break;
 
             case "Normal":
-                // Normal level - Yellow background
-                JPanel yellowPanel = new JPanel();
-                yellowPanel.setBackground(Color.YELLOW);
+                frame.getContentPane().removeAll();
+
+                // GLCanvas for the game with AnimGLEventListener3
+                GLCanvas glCanvasNormal = new GLCanvas();
+                AnimGLEventListener3 gameListenerNormal = new AnimGLEventListener3();
+                glCanvasNormal.addGLEventListener(gameListenerNormal);
+                glCanvasNormal.addKeyListener(gameListenerNormal);
+
+                frame.getContentPane().add(glCanvasNormal, BorderLayout.CENTER);
 
                 // Add "Back to Menu" button in Normal level
                 JPanel normalOverlayPanel = createOverlayPanel(frame);
-                yellowPanel.setLayout(new BorderLayout());
-                yellowPanel.add(normalOverlayPanel, BorderLayout.SOUTH);
+                frame.getContentPane().add(normalOverlayPanel, BorderLayout.SOUTH);
 
-                updateContentPane(frame, yellowPanel);
+                // Animator for Normal level
+                Animator normalAnimator = new FPSAnimator(glCanvasNormal, 60);
+                normalAnimator.start();
+
+                frame.revalidate();
+                frame.repaint();
+
+                glCanvasNormal.requestFocus();
                 break;
 
             case "Hard":
-                // Hard level - Red background
-                JPanel redPanel = new JPanel();
-                redPanel.setBackground(Color.RED);
+                frame.getContentPane().removeAll();
+
+                // GLCanvas for the game with AnimGLEventListener4
+                GLCanvas glCanvasHard = new GLCanvas();
+                AnimGLEventListener4 gameListenerHard = new AnimGLEventListener4();
+                glCanvasHard.addGLEventListener(gameListenerHard);
+                glCanvasHard.addKeyListener(gameListenerHard);
+
+                frame.getContentPane().add(glCanvasHard, BorderLayout.CENTER);
 
                 // Add "Back to Menu" button in Hard level
                 JPanel hardOverlayPanel = createOverlayPanel(frame);
-                redPanel.setLayout(new BorderLayout());
-                redPanel.add(hardOverlayPanel, BorderLayout.SOUTH);
+                frame.getContentPane().add(hardOverlayPanel, BorderLayout.SOUTH);
 
-                updateContentPane(frame, redPanel);
+                // Animator for Hard level
+                Animator hardAnimator = new FPSAnimator(glCanvasHard, 60);
+                hardAnimator.start();
+
+                frame.revalidate();
+                frame.repaint();
+
+                glCanvasHard.requestFocus();
                 break;
 
             default:
@@ -255,15 +284,63 @@ public class HomeScreen extends JPanel {
                 updateContentPane(frame, grayPanel);
                 break;
         }
+
     }
-    private JPanel createOverlayPanel(JFrame frame) {
+    // to handle the picking lvl
+    public class GameLevelSetup {
+
+        public static void setupLevel(JFrame frame, String level) {
+            // remove anything
+            frame.getContentPane().removeAll();
+
+            // GLCanvas and Animator
+            GLCanvas glCanvas = new GLCanvas();
+            Animator animator;
+
+            // what r we gonna pick from AnimGLEventListenersss
+            GLEventListener gameListener = pickinglvll(level);
+            glCanvas.addGLEventListener(gameListener);
+            glCanvas.addKeyListener((KeyListener) gameListener);
+
+            frame.getContentPane().add(glCanvas, BorderLayout.CENTER);
+
+            // Add "Back to Menu" button or overlay
+            JPanel overlayPanel = createOverlayPanel(frame);
+            frame.getContentPane().add(overlayPanel, BorderLayout.SOUTH);
+
+            // Start the animator
+            animator = new FPSAnimator(glCanvas, 60);
+            animator.start();
+
+            // Revalidate and repaint the frame
+            frame.revalidate();
+            frame.repaint();
+
+            glCanvas.requestFocus();
+        }
+
+        private static GLEventListener pickinglvll(String level) {
+            switch (level) {
+                case "Easy":
+                    return new AnimGLEventListener2();
+                case "Normal":
+                    return new AnimGLEventListener3();
+                case "Hard":
+                    return new AnimGLEventListener4();
+                default:
+                    throw new IllegalArgumentException("there is no level bt that name!: " + level);
+            }
+        }
+    }
+
+    private static JPanel createOverlayPanel(JFrame frame) {
         // Transparent panel for overlay
         JPanel overlayPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         overlayPanel.setOpaque(false);
 
         // Add the red "Back to Menu" button using the reusable function
         JButton backButton = createRedButton("Back to Menu", e -> {
-            // Navigate back to the Home Screen
+            //Navigate back to the Home Screen
             frame.getContentPane().removeAll();
             frame.getContentPane().add(new HomeScreen(frame));
             frame.revalidate();
@@ -274,8 +351,24 @@ public class HomeScreen extends JPanel {
         return overlayPanel;
     }
 
+
+//    public class GLCanvasSetup {
+//        public static void setupGLCanvas(JFrame frame, GLEventListener glEventListener, KeyListener keyListener) {
+//            GLCanvas glCanvas = new GLCanvas();
+//
+//            // Add the provided GLEventListener to the canvas
+//            glCanvas.addGLEventListener(glEventListener);
+//
+//            // Add the provided KeyListener to the canvas
+//            glCanvas.addKeyListener(keyListener);
+//
+//            // Add the GLCanvas to the JFrame
+//            frame.getContentPane().add(glCanvas, BorderLayout.CENTER);
+//        }
+//    }
+
     // Reusable function to create a red button with specified text and action listener
-    private JButton createRedButton(String text, ActionListener actionListener) {
+    private static JButton createRedButton(String text, ActionListener actionListener) {
         JButton button = new JButton(text);
         button.setFont(new Font("Arial", Font.BOLD, 14));
         button.setForeground(Color.WHITE);
