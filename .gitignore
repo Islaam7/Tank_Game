@@ -27,3 +27,13 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+# Ignore system-specific files
+**/AppData/
+**/Documents/
+**/Downloads/
+**/OneDrive/
+**/Oracle/
+**/Pictures/
+**/Videos/
+**/Documents/
+.gitconfig
