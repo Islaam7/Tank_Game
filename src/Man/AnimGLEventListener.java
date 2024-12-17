@@ -15,25 +15,25 @@ import java.util.BitSet;
 import javax.media.opengl.glu.GLU;
 
 public class AnimGLEventListener extends AnimListener {
-    
+
     String textureName = "Back.png";
     TextureReader.Texture texture;
     int textureIndex[] = new int[1];
-    
+
     /*
      5 means gun in array pos
-     x and y coordinate for gun 
+     x and y coordinate for gun
      */
     public void init(GLAutoDrawable gld) {
 
         GL gl = gld.getGL();
         gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);    //This Will Clear The Background Color To Black
-        
+
         gl.glEnable(GL.GL_TEXTURE_2D);// Enable Texture Mapping
         gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
         //number of textures,array to hold the indices
         gl.glGenTextures(1, textureIndex, 0);
-        
+
         try {
             texture = TextureReader.readTexture(assetsFolderName + "//" + textureName , true);
             gl.glBindTexture(GL.GL_TEXTURE_2D, textureIndex[0]);
@@ -52,14 +52,14 @@ public class AnimGLEventListener extends AnimListener {
           e.printStackTrace();
         }
     }
-    
+
     public void display(GLAutoDrawable gld) {
 
         GL gl = gld.getGL();
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);
         //Clear The Screen And The Depth Buffer
-        gl.glLoadIdentity(); 
-        
+        gl.glLoadIdentity();
+
         DrawBackground(gl);
     }
 
@@ -68,10 +68,10 @@ public class AnimGLEventListener extends AnimListener {
 
     public void displayChanged(GLAutoDrawable drawable, boolean modeChanged, boolean deviceChanged) {
     }
-    
+
     public void DrawBackground(GL gl){
         gl.glEnable(GL.GL_BLEND);	// Turn Blending On
-        gl.glBindTexture(GL.GL_TEXTURE_2D, textureIndex[0]);	
+        gl.glBindTexture(GL.GL_TEXTURE_2D, textureIndex[0]);
 
         gl.glBegin(GL.GL_QUADS);
         // Front Face
@@ -84,7 +84,7 @@ public class AnimGLEventListener extends AnimListener {
             gl.glTexCoord2f(0.0f, 1.0f);
             gl.glVertex3f(-1.0f, 1.0f, -1.0f);
         gl.glEnd();
-        
+
         gl.glDisable(GL.GL_BLEND);
     }
 
@@ -102,5 +102,9 @@ public class AnimGLEventListener extends AnimListener {
     public void keyReleased(KeyEvent ke) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
 }

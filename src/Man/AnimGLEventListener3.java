@@ -76,6 +76,11 @@ public class AnimGLEventListener3 extends AnimListener {
     @Override
     public void reshape(GLAutoDrawable glAutoDrawable, int i, int i1, int i2, int i3) {}
 
+    @Override
+    public void displayChanged(GLAutoDrawable glAutoDrawable, boolean b, boolean b1) {
+
+    }
+
     public void DrawMountain(GL gl) {
         gl.glColor3f(0.5451f, 0.2706f, 0.0745f);
         gl.glDisable(GL.GL_TEXTURE_2D);
@@ -86,14 +91,6 @@ public class AnimGLEventListener3 extends AnimListener {
         gl.glEnd();
         gl.glEnable(GL.GL_TEXTURE_2D);
     }
-    @Override
-    public void displayChanged(GLAutoDrawable glAutoDrawable, boolean b, boolean b1) {}
-
-    @Override
-    public void reshape(GLAutoDrawable glAutoDrawable, int i, int i1, int i2, int i3) {}
-
-    @Override
-    public void displayChanged(GLAutoDrawable glAutoDrawable, boolean b, boolean b1) {}
 
     public void DrawBackground(GL gl) {
         gl.glEnable(GL.GL_BLEND);
@@ -126,5 +123,10 @@ public class AnimGLEventListener3 extends AnimListener {
     @Override
     public void keyTyped(final KeyEvent event) {
         // don't care
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
     }
 }
