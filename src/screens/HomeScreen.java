@@ -1,9 +1,6 @@
-package Screens;
+package screens;
 
-import Man.AnimGLEventListener2;
-import Man.AnimGLEventListener3;
-import Man.AnimGLEventListener4;
-import Man.SoundManager;
+import Man.*;
 import com.sun.opengl.util.Animator;
 import com.sun.opengl.util.FPSAnimator;
 
@@ -62,7 +59,7 @@ public class HomeScreen extends JPanel {
             frame.getContentPane().removeAll();
 
             GLCanvas glCanvas = new GLCanvas();
-            AnimGLEventListener4 gameListener = new AnimGLEventListener4();
+            AnimGLEventListener1 gameListener = new AnimGLEventListener1();
             glCanvas.addGLEventListener(gameListener);
             glCanvas.addKeyListener(gameListener);
 

@@ -118,4 +118,9 @@ public class AnimGLEventListener2 extends AnimListener {
     public void keyTyped(final KeyEvent event) {
         // Don't care
     }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
 }

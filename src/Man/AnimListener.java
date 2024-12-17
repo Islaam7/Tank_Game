@@ -6,6 +6,7 @@
 package Man;
 
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 import javax.media.opengl.GLEventListener;
 
 /**
@@ -16,5 +17,6 @@ import javax.media.opengl.GLEventListener;
 public abstract class AnimListener implements GLEventListener, KeyListener {
  
     protected String assetsFolderName = "Assets//Man";
-    
+
+    public abstract void mousePressed(MouseEvent e);
 }
