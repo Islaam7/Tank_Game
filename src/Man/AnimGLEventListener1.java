@@ -34,6 +34,7 @@ public class AnimGLEventListener1 extends AnimListener {
     final float g =9.8f;
     final double PI =Math.PI;
     double t=0;
+    SoundManager soundManager = new SoundManager(null);
     /*
      5 means gun in array pos
      x and y coordinate for gun
@@ -155,6 +156,7 @@ public class AnimGLEventListener1 extends AnimListener {
             calme[(int)xBullet+3]-=(maxHight-minHight)*.04;
             isBom=false;
             push =true;
+            soundManager.playSoundOnce("/Assets/music/exp.wav");
 
         }
         if(push){
